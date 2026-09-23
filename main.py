@@ -56,7 +56,24 @@ def main():
                 f"{stats.best_distance:13.2f} | "
                 f"{stats.mean_distance:13.2f}"
             )
-
+    print()
+    print("Measurements:")
+    print(
+        f"Initial best distance: "
+        f"{result.initial_best_distance:.2f}"
+    )
+    print(
+        f"Best distance: "
+        f"{result.best_distance:.2f}"
+    )
+    print(
+        f"Runtime: "
+        f"{result.runtime_seconds:.4f} seconds"
+    )
+    print(
+        f"Population evaluations: "
+        f"{result.population_evaluations}"
+    )
 
 
 

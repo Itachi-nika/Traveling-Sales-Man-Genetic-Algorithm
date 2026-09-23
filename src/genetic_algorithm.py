@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import random
+import time
 
 from src.config import GAConfig
 from src.evolution import create_next_generation
@@ -16,7 +17,10 @@ from src.tsp import City
 class GAResult:
     best_route: list[int]
     best_distance: float
+    initial_best_distance: float
     history: list[GenerationStats]
+    runtime_seconds: float
+    population_evaluations: int
 
 
 def run_genetic_algorithm(
@@ -24,12 +28,6 @@ def run_genetic_algorithm(
     config: GAConfig,
     seed: int,
 ) -> GAResult:
-    """
-    Run the complete genetic algorithm.
-
-    Returns the best solution observed during the run
-    together with statistics for every generation.
-    """
 
     if len(cities) != config.num_cities:
         raise ValueError(
@@ -40,6 +38,8 @@ def run_genetic_algorithm(
         raise ValueError(
             "Number of generations cannot be negative."
         )
+
+    start_time = time.perf_counter()
 
     rng = random.Random(seed)
 
@@ -56,6 +56,8 @@ def run_genetic_algorithm(
             generation=0,
         )
     ]
+
+    initial_best_distance = history[0].best_distance
 
     best_route = min(
         population,
@@ -106,8 +108,18 @@ def run_genetic_algorithm(
             best_distance = generation_best_distance
             best_route = generation_best.copy()
 
+    runtime_seconds = time.perf_counter() - start_time
+
+    population_evaluations = (
+        config.population_size
+        * (config.generations + 1)
+    )
+
     return GAResult(
         best_route=best_route,
         best_distance=best_distance,
+        initial_best_distance=initial_best_distance,
         history=history,
+        runtime_seconds=runtime_seconds,
+        population_evaluations=population_evaluations,
     )

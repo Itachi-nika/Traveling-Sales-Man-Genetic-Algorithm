@@ -134,7 +134,22 @@ def test_same_seed_produces_same_result():
         seed=42,
     )
 
-    assert result_1 == result_2
+    assert result_1.best_route == result_2.best_route
+
+    assert result_1.best_distance == pytest.approx(
+        result_2.best_distance
+    )
+
+    assert result_1.initial_best_distance == pytest.approx(
+        result_2.initial_best_distance
+    )
+
+    assert result_1.history == result_2.history
+
+    assert (
+        result_1.population_evaluations
+        == result_2.population_evaluations
+    )
 
 
 def test_best_distance_never_increases_with_elitism():
@@ -167,4 +182,70 @@ def test_best_distance_never_increases_with_elitism():
         best_distances[1:],
     ):
         assert current <= previous
+
+
+def test_initial_best_distance_matches_history():
+    config = replace(
+        BASELINE,
+        num_cities=10,
+        population_size=20,
+        generations=5,
+    )
+
+    cities = generate_cities(
+        num_cities=config.num_cities,
+        seed=123,
+    )
+
+    result = run_genetic_algorithm(
+        cities=cities,
+        config=config,
+        seed=42,
+    )
+
+    assert result.initial_best_distance == pytest.approx(
+        result.history[0].best_distance
+    )
+
+def test_runtime_is_non_negative():
+    config = replace(
+        BASELINE,
+        num_cities=10,
+        population_size=20,
+        generations=5,
+    )
+
+    cities = generate_cities(
+        num_cities=config.num_cities,
+        seed=123,
+    )
+
+    result = run_genetic_algorithm(
+        cities=cities,
+        config=config,
+        seed=42,
+    )
+
+    assert result.runtime_seconds >= 0.0
+
+def test_population_evaluations_are_correct():
+    config = replace(
+        BASELINE,
+        num_cities=10,
+        population_size=20,
+        generations=5,
+    )
+
+    cities = generate_cities(
+        num_cities=config.num_cities,
+        seed=123,
+    )
+
+    result = run_genetic_algorithm(
+        cities=cities,
+        config=config,
+        seed=42,
+    )
+
+    assert result.population_evaluations == 20 * 6
 
