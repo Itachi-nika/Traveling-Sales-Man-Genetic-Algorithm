@@ -2,11 +2,11 @@ from dataclasses import replace
 from pathlib import Path
 
 from rich.progress import (
+    BarColumn,
     Progress,
     SpinnerColumn,
-    TextColumn,
-    BarColumn,
     TaskProgressColumn,
+    TextColumn,
     TimeElapsedColumn,
     TimeRemainingColumn,
 )
@@ -17,8 +17,8 @@ from src.experiment import (
     summarize_experiment_runs,
 )
 from src.export_csv import (
-    export_runs_csv,
     export_history_csv,
+    export_runs_csv,
 )
 
 GENERATION_VALUES = [
@@ -35,11 +35,7 @@ GA_SEEDS = list(range(30))
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
-RESULTS_DIR = (
-    PROJECT_ROOT
-    / "results"
-    / "experiment_c"
-)
+RESULTS_DIR = PROJECT_ROOT / "results" / "experiment_c"
 
 RUNS_FILE = RESULTS_DIR / "runs.csv"
 HISTORY_FILE = RESULTS_DIR / "history.csv"
@@ -48,28 +44,18 @@ HISTORY_FILE = RESULTS_DIR / "history.csv"
 def main() -> None:
     all_runs = []
 
-    total_runs = (
-        len(GENERATION_VALUES)
-        * len(GA_SEEDS)
-    )
+    total_runs = len(GENERATION_VALUES) * len(GA_SEEDS)
 
     with Progress(
         SpinnerColumn(),
-        TextColumn(
-            "[bold]Experiment C[/bold]"
-        ),
+        TextColumn("[bold]Experiment C[/bold]"),
         BarColumn(),
         TaskProgressColumn(),
-        TextColumn(
-            "Generations: {task.fields[generations]}"
-        ),
-        TextColumn(
-            "Seed: {task.fields[seed]}"
-        ),
+        TextColumn("Generations: {task.fields[generations]}"),
+        TextColumn("Seed: {task.fields[seed]}"),
         TimeElapsedColumn(),
         TimeRemainingColumn(),
     ) as progress:
-
         task = progress.add_task(
             "Running",
             total=total_runs,
