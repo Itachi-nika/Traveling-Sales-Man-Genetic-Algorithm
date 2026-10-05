@@ -1,4 +1,5 @@
 from dataclasses import dataclass, replace
+from tqdm import tqdm
 
 from src.config import GAConfig
 from src.genetic_algorithm import (
@@ -262,31 +263,53 @@ def run_parameter_sweep(
     all_runs = []
     summaries = []
 
-    for value in values:
-        if not isinstance(value, (int, float)):
-            raise ValueError(
-                "Parameter values must be numeric."
+    total_runs = len(values) * len(ga_seeds)
+
+    with tqdm(
+        total=total_runs,
+        desc=f"experiment: {experiment_name}",
+        unit="run",
+    ) as progress:
+
+        for value in values:
+
+            if not isinstance(value, (int, float)):
+                raise ValueError(
+                    "Experimental parameter must be numeric."
+                )
+
+            config = replace(
+                baseline,
+                **{parameter_name: value},
             )
 
-        config = replace(
-            baseline,
-            **{parameter_name: value},
-        )
+            runs = []
 
-        runs = run_experiment_repeated(
-            experiment_name=experiment_name,
-            parameter_name=parameter_name,
-            config=config,
-            problem_seed=problem_seed,
-            ga_seeds=ga_seeds,
-        )
+            for ga_seed in ga_seeds:
 
-        summary = summarize_experiment_runs(
-            runs
-        )
+                progress.set_postfix(
+                    parameter=value,
+                    seed=ga_seed,
+                )
 
-        all_runs.extend(runs)
-        summaries.append(summary)
+                run = run_experiment_once(
+                    experiment_name=experiment_name,
+                    parameter_name=parameter_name,
+                    config=config,
+                    problem_seed=problem_seed,
+                    ga_seed=ga_seed,
+                )
+
+                runs.append(run)
+
+                progress.update(1)
+
+            summary = summarize_experiment_runs(
+                runs
+            )
+
+            all_runs.extend(runs)
+            summaries.append(summary)
 
     return ParameterSweepResult(
         runs=all_runs,
