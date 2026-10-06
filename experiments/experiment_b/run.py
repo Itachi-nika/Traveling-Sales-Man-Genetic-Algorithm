@@ -1,3 +1,7 @@
+
+#John Molin 2026
+
+
 from pathlib import Path
 
 from src.config import BASELINE
@@ -8,12 +12,6 @@ from src.export_csv import (
 )
 
 
-# ---------------------------------------------------------
-# Experiment B - Smoke test
-# ---------------------------------------------------------
-
-# Independent variable:
-# Population size.
 POPULATION_VALUES = [
     50,
     100,
@@ -22,15 +20,11 @@ POPULATION_VALUES = [
     1000,
 ]
 
-# Keep the TSP problem fixed.
+
 PROBLEM_SEED = 12345
 
-GA_SEEDS = list(range(30)) # Run 30 different GA instances
+GA_SEEDS = list(range(30)) 
 
-
-# ---------------------------------------------------------
-# Output paths
-# ---------------------------------------------------------
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -44,9 +38,6 @@ RUNS_FILE = RESULTS_DIR / "runs.csv"
 HISTORY_FILE = RESULTS_DIR / "history.csv"
 
 
-# ---------------------------------------------------------
-# Main
-# ---------------------------------------------------------
 
 def main() -> None:
     sweep = run_parameter_sweep(
@@ -68,7 +59,7 @@ def main() -> None:
         file_path=HISTORY_FILE,
     )
 
-    print("Experiment B smoke test completed.")
+    print("Experiment B completed.")
     print(f"Total runs: {len(sweep.runs)}")
     print(f"Runs saved to: {RUNS_FILE}")
     print(f"History saved to: {HISTORY_FILE}")
