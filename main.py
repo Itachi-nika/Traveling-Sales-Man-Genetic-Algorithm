@@ -3,6 +3,15 @@ from src.genetic_algorithm import run_genetic_algorithm
 from src.tsp import generate_cities
 
 #Just a test to make sure everything is working and the genetic algorithm runs with the baseline configuration
+#Our main is in experiments/..., this is just a test to make sure everything is working and the genetic algorithm runs with the baseline configuration
+#before we run the bigger experiments.
+#Ignore this..
+
+# FILIP YOUSIF : experiments/experiment_a_cities.py is the main experiment file for Experiment A
+# JOHN MOLIN  : experiments/experiment_b/run.py is the main experiment file for Experiment B
+# SAMUEL YOUSEF : experiments/experiment_c_population.py is the main experiment file for Experiment C
+# MAJD MORAD : experiments/experiment_d_mutation.py is the main experiment file for Experiment D
+
 def main():
     problem_seed = 12345
     ga_seed = 42
