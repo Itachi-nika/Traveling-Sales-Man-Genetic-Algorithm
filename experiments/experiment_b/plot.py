@@ -68,10 +68,7 @@ def main() -> None:
         exist_ok=True,
     )
 
-    # -----------------------------------------------------
-    # Graph 1:
-    # Population size vs mean best distance
-    # -----------------------------------------------------
+    # Graph 1: Population size vs mean best distance
 
     best_distance_summary = (
         runs_df
@@ -109,11 +106,8 @@ def main() -> None:
         dpi=300,
     )
 
-    # -----------------------------------------------------
-    # Graph 2:
-    # Population size vs mean runtime
-    # -----------------------------------------------------
-
+    # Graph 2: Population size vs mean runtime
+    
     runtime_summary = (
         runs_df
         .groupby("population_size")["runtime_seconds"]
@@ -150,10 +144,7 @@ def main() -> None:
         dpi=300,
     )
 
-    # -----------------------------------------------------
-    # Graph 3:
-    # Convergence over generations
-    # -----------------------------------------------------
+    # Graph 3: Convergence over generations
 
     convergence_summary = (
         history_df
@@ -212,10 +203,7 @@ def main() -> None:
         dpi=300,
     )
 
-    # -----------------------------------------------------
-    # Graph 4:
-    # Distribution of final best distances
-    # -----------------------------------------------------
+    # Graph 4: Distribution of final best distances-
 
     population_values = sorted(
         runs_df["population_size"].unique()
