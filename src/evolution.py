@@ -8,20 +8,28 @@ from src.selection import tournament_selection
 from src.tsp import City
 
 
+""" Step 1: Rank the current population according to tour distance
+
+    Step 2: Preserve the best individuals directly in the next generation using elitism
+
+    Step 3: While the new population is not full:
+    Select two parents using tournament selection
+    Apply Order Crossover with the specified crossover probability
+    Otherwise, copy the parents directly
+    Apply swap mutation to each child with the specified mutation probability
+    Add the offspring to the new population
+
+    Step 4: Continue until the required population size is reached
+
+    Step 5: Return the completed next generation    """
+
+
 def create_next_generation(
     population: list[list[int]],
     cities: list[City],
     config: GAConfig,
     rng: random.Random,
 ) -> list[list[int]]:
-    """
-    Create one new generation using:
-
-    - elitism
-    - tournament selection
-    - order crossover
-    - swap mutation
-    """
 
     if len(population) != config.population_size:
         raise ValueError(

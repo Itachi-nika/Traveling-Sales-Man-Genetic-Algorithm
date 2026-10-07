@@ -1,6 +1,18 @@
 from dataclasses import dataclass
 import random
 
+""" Step 1: Specify the number of cities and the coordinate range
+
+    Step 2: Initialize the random generator using the problem seed
+
+    Step 3: Generate a random x- and y-coordinate for each city
+
+    Step 4: Store each generated coordinate pair as a city
+
+    Step 5: Return the complete set of cities as the TSP problem instance
+    
+          """
+
 
 @dataclass(frozen=True)
 class City:

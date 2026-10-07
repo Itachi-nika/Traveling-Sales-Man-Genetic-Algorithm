@@ -3,6 +3,16 @@ import random
 from src.fitness import tour_distance
 from src.tsp import City
 
+""" Step 1: Randomly select a number of individuals from the population
+
+    Step 2: Evaluate the selected individuals using their total tour distance
+
+    Step 3: Compare the selected individuals
+
+    Step 4: Choose the individual with the shortest tour distance as the winner
+
+    Step 5: Return the winner as a parent for reproduction      """
+
 
 def tournament_selection(
     population: list[list[int]],
@@ -10,13 +20,8 @@ def tournament_selection(
     tournament_size: int,
     rng: random.Random,
 ) -> list[int]:
-    """
-    Select one parent using tournament selection.
-
-    A number of individuals are sampled randomly from the population.
-    The individual with the shortest tour distance wins.
-    """
-
+    
+#ErrorChecking
     if tournament_size < 1:
         raise ValueError("Tournament size must be at least 1.")
 

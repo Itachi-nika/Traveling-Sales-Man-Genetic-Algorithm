@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-
+#Our baseline config for the Genetic Algorithm
 @dataclass(frozen=True)
 class GAConfig:
     num_cities: int = 50

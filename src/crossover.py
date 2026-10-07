@@ -1,17 +1,26 @@
 import random
 
+""" Step 1: Randomly select two crossover positions
+
+    Step 2: Copy the segment between the crossover positions from each parent into the corresponding child
+
+    Step 3: Starting after the copied segment, read the cities from the other parent in circular order
+
+    Step 4: Skip cities that are already present in the child
+
+    Step 5: Fill the remaining empty positions with the unused cities in the order they are encountered
+
+    Step 6: Repeat the same process in the opposite direction to create the second child
+
+    Step 7: Return both valid offspring     """
+
 
 def order_crossover(
     parent_1: list[int],
     parent_2: list[int],
     rng: random.Random,
 ) -> tuple[list[int], list[int]]:
-    """
-    Perform Order Crossover (OX) on two TSP parents.
-
-    Returns two children that are valid permutations.
-    """
-
+    #Check that parents are valid
     if len(parent_1) != len(parent_2):
         raise ValueError("Parents must have the same length.")
 
@@ -52,19 +61,15 @@ def _create_child(
     start: int,
     end: int,
 ) -> list[int]:
-    """
-    Create one child using Order Crossover.
-    """
-
+  
     size = len(segment_parent)
 
     child = [None] * size
 
-    # Copy a segment from the first parent.
+    
     child[start:end + 1] = segment_parent[start:end + 1]
 
-    # Read cities from the second parent starting
-    # immediately after the crossover segment.
+   
     fill_values = []
 
     for offset in range(size):
@@ -74,8 +79,7 @@ def _create_child(
         if city not in child:
             fill_values.append(city)
 
-    # Fill empty positions starting immediately
-    # after the copied segment.
+   
     fill_index = 0
 
     for offset in range(size):

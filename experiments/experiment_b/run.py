@@ -1,7 +1,4 @@
 
-#John Molin 2026
-
-
 from pathlib import Path
 
 from src.config import BASELINE

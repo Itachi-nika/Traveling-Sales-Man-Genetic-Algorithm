@@ -1,18 +1,19 @@
 import random
 
 
+""" Step 1: Select two different positions in the route at random
+
+    Step 2: Swap the cities located at the selected positions
+
+    Step 3: Keep all other cities unchanged
+
+    Step 4: Return the mutated route as a valid TSP individual  """
+
 def swap_mutation(
     individual: list[int],
     rng: random.Random,
 ) -> list[int]:
-    """
-    Perform swap mutation on a TSP individual.
-
-    Two different positions are selected randomly
-    and their cities are swapped.
-
-    The original individual is not modified.
-    """
+ 
 
     if len(individual) < 2:
         raise ValueError(

@@ -2,7 +2,7 @@ from src.config import BASELINE
 from src.genetic_algorithm import run_genetic_algorithm
 from src.tsp import generate_cities
 
-
+#Just a test to make sure everything is working and the genetic algorithm runs with the baseline configuration
 def main():
     problem_seed = 12345
     ga_seed = 42
